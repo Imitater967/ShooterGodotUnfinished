@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfngnlc31n08r"]
+
+[ext_resource type="Texture2D" uid="uid://cmtrdu6bhpjt1" path="res://art/background.png" id="1_beswh"]
+[ext_resource type="Script" path="res://scripts/Menu.cs" id="1_fsk15"]
+[ext_resource type="PackedScene" uid="uid://ctwi8tlw1h6rf" path="res://scenes/Level1.tscn" id="2_t08qt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lchb3"]
+font_size = 32
+
+[node name="Menu" type="Node" node_paths=PackedStringArray("UI", "LevelContainer", "LineEdit", "StatusLabel", "HostHBox", "NotConnectedHBox")]
+script = ExtResource("1_fsk15")
+UI = NodePath("UI")
+LevelContainer = NodePath("LevelRoot")
+LevelScene = ExtResource("2_t08qt")
+LineEdit = NodePath("UI/VBoxContainer/LineEdit")
+StatusLabel = NodePath("UI/VBoxContainer/Status")
+HostHBox = NodePath("UI/VBoxContainer/PanelContainer/HostHBox")
+NotConnectedHBox = NodePath("UI/VBoxContainer/PanelContainer/NotConnectedHBox")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = 472.0
+offset_bottom = 471.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_beswh")
+stretch_mode = 1
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/Level1.tscn")
+spawn_path = NodePath("../LevelRoot")
+spawn_limit = 1
+
+[node name="LevelRoot" type="Node" parent="."]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 328.37
+offset_bottom = 115.0
+metadata/_edit_group_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[node name="HostHBox" type="HBoxContainer" parent="UI/VBoxContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="StartBtn" type="Button" parent="UI/VBoxContainer/PanelContainer/HostHBox"]
+layout_mode = 2
+text = "开始游戏"
+
+[node name="NotConnectedHBox" type="HBoxContainer" parent="UI/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HostBtn" type="Button" parent="UI/VBoxContainer/PanelContainer/NotConnectedHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "创建房间"
+
+[node name="JoinBtn" type="Button" parent="UI/VBoxContainer/PanelContainer/NotConnectedHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "加入房间"
+
+[node name="LineEdit" type="LineEdit" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "127.0.0.1:1434"
+
+[node name="Status" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "等待中"
+label_settings = SubResource("LabelSettings_lchb3")
+
+[node name="Control" type="Control" parent="UI/VBoxContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="UI/VBoxContainer/PanelContainer/HostHBox/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/PanelContainer/NotConnectedHBox/HostBtn" to="." method="_on_host_btn_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/PanelContainer/NotConnectedHBox/JoinBtn" to="." method="_on_join_btn_pressed"]

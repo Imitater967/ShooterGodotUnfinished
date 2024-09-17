@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctwi8tlw1h6rf"]
+
+[ext_resource type="Texture2D" uid="uid://dg0wabevtt57d" path="res://icon.svg" id="1_eu2mr"]
+[ext_resource type="Script" path="res://scripts/Level.cs" id="1_vey03"]
+[ext_resource type="PackedScene" uid="uid://bas3d60qmxpg8" path="res://prefabs/ship.tscn" id="2_tixdt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4m8x3"]
+size = Vector2(103.025, 875.245)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cu2fb"]
+size = Vector2(1334, 94.5149)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f20gq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmson"]
+size = Vector2(334, 595)
+
+[node name="Level1" type="Node2D" node_paths=PackedStringArray("PlayerContainer", "SpawnArea")]
+script = ExtResource("1_vey03")
+PlayerContainer = NodePath("Players/PlayerContainer")
+PlayerScene = ExtResource("2_tixdt")
+SpawnArea = NodePath("Players/SpawnArea/CollisionShape2D")
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="Boundary" type="StaticBody2D" parent="Environment"]
+position = Vector2(454, 552)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Environment/Boundary"]
+position = Vector2(833, -210)
+shape = SubResource("RectangleShape2D_4m8x3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Boundary"]
+position = Vector2(-520.513, -233.377)
+shape = SubResource("RectangleShape2D_4m8x3")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Environment/Boundary"]
+position = Vector2(135, -681)
+shape = SubResource("RectangleShape2D_cu2fb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Environment/Boundary"]
+position = Vector2(152, 222)
+shape = SubResource("RectangleShape2D_cu2fb")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Environment/Boundary"]
+position = Vector2(121, 273)
+scale = Vector2(13.7221, 1.38769)
+texture = ExtResource("1_eu2mr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Boundary"]
+position = Vector2(-529, -397)
+scale = Vector2(0.920081, 10.075)
+texture = ExtResource("1_eu2mr")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Environment/Boundary"]
+position = Vector2(121, -710)
+scale = Vector2(13.7221, 1.38769)
+texture = ExtResource("1_eu2mr")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Environment/Boundary"]
+position = Vector2(846, -254)
+scale = Vector2(0.920081, 10.075)
+texture = ExtResource("1_eu2mr")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment"]
+position = Vector2(597, 333)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Environment/StaticBody2D"]
+scale = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_f20gq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/StaticBody2D"]
+scale = Vector2(1.26578, 1.44177)
+texture = ExtResource("1_eu2mr")
+
+[node name="Players" type="Node" parent="."]
+
+[node name="PlayerContainer" type="Node2D" parent="Players"]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="Players"]
+_spawnable_scenes = PackedStringArray("res://prefabs/ship.tscn", "res://prefabs/bullet_blue.tscn", "res://prefabs/bullet_green.tscn", "res://prefabs/bullet_red.tscn")
+spawn_path = NodePath("../PlayerContainer")
+
+[node name="SpawnArea" type="Area2D" parent="Players"]
+position = Vector2(212, 220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Players/SpawnArea"]
+position = Vector2(15, 108.5)
+shape = SubResource("RectangleShape2D_fmson")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmih6u4bit456"]
+
+[ext_resource type="Script" path="res://scripts/Bullet.cs" id="1_qbdcy"]
+[ext_resource type="Texture2D" uid="uid://bhl6xnby7xob0" path="res://art/ammo_yellow.png" id="2_v34ni"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ve2v"]
+radius = 12.0416
+
+[node name="BulletGreen" type="Area2D"]
+script = ExtResource("1_qbdcy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_v34ni")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1ve2v")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

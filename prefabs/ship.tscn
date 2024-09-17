@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://bas3d60qmxpg8"]
+
+[ext_resource type="Texture2D" uid="uid://bpmm8ch6aptmb" path="res://art/ship_0000.png" id="1_2cbx1"]
+[ext_resource type="Script" path="res://scripts/Plane.cs" id="1_2frki"]
+[ext_resource type="Texture2D" uid="uid://c2hl5s6ljqr2h" path="res://art/ship_0001.png" id="2_8fj1i"]
+[ext_resource type="PackedScene" uid="uid://2nq1jqv4ishl" path="res://prefabs/camera_2d.tscn" id="2_a87ar"]
+[ext_resource type="PackedScene" uid="uid://j2a80p4f4nbw" path="res://prefabs/bullet_blue.tscn" id="2_bqpr4"]
+[ext_resource type="PackedScene" uid="uid://dwmbee3qfcx18" path="res://prefabs/bullet_red.tscn" id="3_0vujb"]
+[ext_resource type="Texture2D" uid="uid://cvcekw3072luc" path="res://art/ship_0002.png" id="3_8s3bt"]
+[ext_resource type="PackedScene" uid="uid://bmih6u4bit456" path="res://prefabs/bullet_green.tscn" id="4_bxk02"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6l0d8"]
+radius = 47.67
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ugca0"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Models:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Ship" type="CharacterBody2D" node_paths=PackedStringArray("_ModelRoot", "_Muzzle", "_ShootTimer", "_BlueModel", "_RedModel", "_GreenModel")]
+script = ExtResource("1_2frki")
+_Camera = ExtResource("2_a87ar")
+_ModelRoot = NodePath("Models")
+_Muzzle = NodePath("Models/Muzzle")
+_ShootTimer = NodePath("ShootTimer")
+_BlueAmmo = ExtResource("2_bqpr4")
+_BlueModel = NodePath("Models/Blue")
+_RedAmmo = ExtResource("3_0vujb")
+_RedModel = NodePath("Models/Red")
+_GreenAmmo = ExtResource("4_bxk02")
+_GreenModel = NodePath("Models/Green")
+
+[node name="Models" type="Node2D" parent="."]
+scale = Vector2(3, 3)
+
+[node name="Blue" type="Sprite2D" parent="Models"]
+texture = ExtResource("1_2cbx1")
+
+[node name="Red" type="Sprite2D" parent="Models"]
+visible = false
+texture = ExtResource("2_8fj1i")
+
+[node name="Green" type="Sprite2D" parent="Models"]
+visible = false
+texture = ExtResource("3_8s3bt")
+
+[node name="Muzzle" type="Node2D" parent="Models"]
+position = Vector2(0, -11)
+scale = Vector2(0.333333, 0.333333)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6l0d8")
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.33
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ugca0")
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

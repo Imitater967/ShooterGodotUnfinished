@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://j2a80p4f4nbw"]
+
+[ext_resource type="PackedScene" uid="uid://bmih6u4bit456" path="res://prefabs/bullet_green.tscn" id="1_8k7r5"]
+[ext_resource type="Texture2D" uid="uid://cmtui1m2wonda" path="res://art/bullet_blue.png" id="2_3v6l2"]
+
+[node name="BulletGreen" instance=ExtResource("1_8k7r5")]
+_DamageType = 1
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_3v6l2")
